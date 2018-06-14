@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     public bool jumpStart = false;
 
     public ParticleSystem particle = null;
+    public ParticleSystem splash = null;
     public GameObject chick = null;
 
     private Renderer myRenderer = null;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip audioHit = null;
     public AudioClip audioSplash = null;
 
-    public ParticleSystem splash = null;
+    
     public bool parentedToObject = false;
 
 
@@ -234,7 +235,25 @@ public class PlayerController : MonoBehaviour {
         jumpStart = false;
 
         PlayAudioClip(audioHop);
-        LeanTween.move(this.gameObject, pos, moveTime ).setOnComplete(MoveComplete);    
+        //LeanTween.move(this.gameObject, pos, moveTime ).setOnComplete(MoveComplete);    
+        StartCoroutine(Move(pos, moveTime));
+    }
+
+    IEnumerator Move(Vector3 pos, float moveTime)
+    {
+        Vector3 currentPos = transform.position;
+
+        float t = 0;
+
+        while(t < 1)
+        {
+            t += Time.deltaTime / moveTime;
+            transform.position = Vector3.Lerp(currentPos, pos, t);
+            yield return null;
+        }
+
+        Debug.Log("reached coroutine eding");
+        MoveComplete();
     }
 
     void MoveComplete()
@@ -269,9 +288,10 @@ public class PlayerController : MonoBehaviour {
     public void GotHit()
     {
         isDead = true;
+        particle.Play();
         ParticleSystem.EmissionModule em = particle.emission;
         em.enabled = true;
-
+        
         PlayAudioClip(audioHit);
 
         Manager.instance.GameOver();
@@ -282,6 +302,7 @@ public class PlayerController : MonoBehaviour {
     public void GotSoaked()
     {
         isDead = true;
+        splash.Play();
         ParticleSystem.EmissionModule em = splash.emission;
         em.enabled = true;
 

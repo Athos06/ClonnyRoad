@@ -42,21 +42,23 @@ public class Mover : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            Debug.Log("mover triger enter player.");
+
+            PlayerController player = other.GetComponent<PlayerController>();
 
             if (parentOnTrigger)
             {
-                Debug.Log("Enter: parent to me");
+            
                 other.transform.parent = this.transform;
 
-                other.GetComponent<PlayerController>().parentedToObject = true;
+                if (!player.isDead)
+                    player.parentedToObject = true;
             }
 
             if (hitBoxOnTrigger)
             {
                 Debug.Log("Enter: gothit");
 
-                other.GetComponent<PlayerController>().GotHit();
+                player.GotHit();
             }
         }
     }

@@ -16,7 +16,6 @@ public class Water : MonoBehaviour
 
             if( !playerController.parentedToObject && !playerController.isJumping)
             {
-                Debug.Log("Player fell in to the water!");
 
                 hitWater = true;
 

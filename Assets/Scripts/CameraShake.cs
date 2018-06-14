@@ -4,27 +4,36 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    public float jumpIter = 4.5f;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("c"))
-        {
-            Shake();
-        }
-    }
+    public float duration;
+    public float magnitude;
 
     public void Shake()
     {
-        float height = Mathf.PerlinNoise(jumpIter, 0f) * 5;
-        height = height * height * 0.2f;
-
-        float shakeAmt = height;
-        float shakePeriodTime = 0.25f;
-        float dropOffTime = 1.25f;
-
-        LTDescr shakeTween = LeanTween.rotateAroundLocal(gameObject, Vector3.right, shakeAmt, shakePeriodTime).setEase(LeanTweenType.easeShake).setLoopClamp().setRepeat(-1);
-        LeanTween.value( gameObject, shakeAmt, 0, dropOffTime).setOnUpdate((float val) => { shakeTween.setTo(Vector3.right * val); }).setEase(LeanTweenType.easeOutQuad);
+        StartCoroutine(Shake(duration, magnitude));
     }
 
+
+
+    public IEnumerator Shake (float duration, float magnitude)
+    {
+        Vector3 originalPos = transform.localPosition;
+
+        float elapsed = 0.0f;
+
+        while(elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.localPosition = new Vector3(x, y, originalPos.z);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        transform.localPosition = originalPos;
+
+    }
 }

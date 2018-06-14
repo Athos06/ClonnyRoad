@@ -15,7 +15,8 @@ public class Manager : MonoBehaviour
     public Text score = null;
 
     public Camera gameCamera = null;
- 
+    public CameraFollow cameraController;
+    
     public LevelGenerator levelGenerator = null;
 
     private int currentCoins = 0;
@@ -88,7 +89,7 @@ public class Manager : MonoBehaviour
     public void GameOver()
     {
         gameCamera.GetComponent<CameraShake>().Shake();
-        gameCamera.GetComponent<CameraFollow>().enabled = false;
+        cameraController.enabled = false;
 
         score.text = "Score: " + currentDistance;
 
