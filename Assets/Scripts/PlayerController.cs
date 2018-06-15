@@ -202,13 +202,16 @@ public class PlayerController : MonoBehaviour {
         {
             if (Input.GetKeyUp(KeyCode.UpArrow))
             {
-                Moving(new Vector3(transform.position.x, transform.position.y, transform.position.z + moveDistance));
-
-                //if we actually are moving ahead we will increase score (necessary in case we went back so it doesnt count advancing again even we are not not further ahead than last time)
-                if (transform.position.z + moveDistance > mostAdvancedPosition) { 
+                if (transform.position.z + moveDistance > mostAdvancedPosition)
+                {
                     mostAdvancedPosition = transform.position.z + moveDistance;
                     SetMoveForwardState();
                 }
+
+                Moving(new Vector3(transform.position.x, transform.position.y, transform.position.z + moveDistance));
+
+                //if we actually are moving ahead we will increase score (necessary in case we went back so it doesnt count advancing again even we are not not further ahead than last time)
+             
                 
             }
             else if (Input.GetKeyUp(KeyCode.DownArrow))
@@ -235,7 +238,6 @@ public class PlayerController : MonoBehaviour {
         jumpStart = false;
 
         PlayAudioClip(audioHop);
-        //LeanTween.move(this.gameObject, pos, moveTime ).setOnComplete(MoveComplete);    
         StartCoroutine(Move(pos, moveTime));
     }
 
@@ -317,6 +319,18 @@ public class PlayerController : MonoBehaviour {
 
     }
 
+    public void GotOutOfBounds()
+    {
+        isDead = true;
+
+        PlayAudioClip(audioHit);
+
+        chick.SetActive(false);
+
+        Manager.instance.GameOver();
+
+
+    }
 
 
     void PlayAudioClip(AudioClip clip)

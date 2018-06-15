@@ -18,6 +18,8 @@ public class LevelGenerator : MonoBehaviour {
     private Queue<GameObject> groundList = new Queue<GameObject>();
 
 
+    public GameObject ObjectToMoveForward;
+
     /// <summary>
     /// When we have a doble GroundTile it will removed only when we advanced twice, we set this flag to true to indicate that we dont destroy it the first time but the second time we advance
     /// </summary>
@@ -79,11 +81,15 @@ public class LevelGenerator : MonoBehaviour {
 
     public void RemovedOldGround()
     {
-        if(groundList.Peek().transform.localScale.z == 2 )
+        
+        if (groundList.Peek().transform.localScale.z == 2 )
         {
             if (markToDestroyNext)
             {
                 Destroy(groundList.Dequeue());
+                ObjectToMoveForward.transform.position = new Vector3(ObjectToMoveForward.transform.position.x, 
+                    ObjectToMoveForward.transform.position.y, 
+                    ObjectToMoveForward.transform.position.z + 2);
                 markToDestroyNext = false;
             }
             else
@@ -94,9 +100,10 @@ public class LevelGenerator : MonoBehaviour {
         else
         {
             Destroy(groundList.Dequeue());
+            ObjectToMoveForward.transform.position = new Vector3(ObjectToMoveForward.transform.position.x,
+                   ObjectToMoveForward.transform.position.y,
+                   ObjectToMoveForward.transform.position.z + 1);
         }
-        
 
-        //TODO move the deathBox forward
     }
 }

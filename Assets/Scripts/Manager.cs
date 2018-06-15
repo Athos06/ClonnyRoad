@@ -26,8 +26,6 @@ public class Manager : MonoBehaviour
 
     private int highScore = 0;
 
-    public Remover remover;
-
     private static Manager s_Instance;
     public static Manager instance
     {
@@ -81,7 +79,6 @@ public class Manager : MonoBehaviour
 
         levelGenerator.RandomGenerator();
         levelGenerator.RemovedOldGround();
-        remover.moveForward();
     }
 
     public bool CanPlay()

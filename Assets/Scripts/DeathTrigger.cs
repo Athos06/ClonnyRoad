@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Remover : MonoBehaviour {
+public class DeathTrigger : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-
-        if (other.tag == "Player")
+        if(other.tag == "Player")
         {
-            Manager.instance.GameOver();
+            PlayerController player = other.GetComponent<PlayerController>();
+            player.GotOutOfBounds();
         }
         else
         {
             if(other.tag != "DeathTrigger")
-            { 
+            {
                 Destroy(other.gameObject);
             }
         }
-
-
     }
+
 }

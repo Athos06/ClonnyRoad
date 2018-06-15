@@ -33,7 +33,7 @@ public class Mover : MonoBehaviour
         }
         if(!myRenderer.isVisible && isVisible )
         {
-            Destroy(this.gameObject);
+          //  Destroy(this.gameObject);
         }
     }
 
@@ -55,8 +55,6 @@ public class Mover : MonoBehaviour
 
             if (hitBoxOnTrigger)
             {
-                Debug.Log("Enter: gothit");
-
                 player.GotHit();
             }
         }

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Collider
+  - collider
+  - train
+  - DeathTrigger
   layers:
   - Default
   - TransparentFX
@@ -14,10 +17,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - PlayerDeathTrigger
+  - Player
+  - DestructionTriggers
+  - Ground
   - 
   - 
   - 
