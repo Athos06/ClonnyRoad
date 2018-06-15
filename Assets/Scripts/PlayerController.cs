@@ -287,6 +287,9 @@ public class PlayerController : MonoBehaviour {
 
     public void GotHit()
     {
+        if (isDead)
+            return;
+
         isDead = true;
         particle.Play();
         ParticleSystem.EmissionModule em = particle.emission;

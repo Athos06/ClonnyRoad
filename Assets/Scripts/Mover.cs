@@ -33,7 +33,6 @@ public class Mover : MonoBehaviour
         }
         if(!myRenderer.isVisible && isVisible )
         {
-            Debug.Log("Remove object. No longer seen by camera.");
             Destroy(this.gameObject);
         }
     }

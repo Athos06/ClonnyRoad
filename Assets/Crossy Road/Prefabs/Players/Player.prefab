@@ -3629,7 +3629,8 @@ AudioSource:
   m_GameObject: {fileID: 114832}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 619ce0cf1b1f83a4ba0c9f8fba6220c1,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -3676,7 +3677,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -3688,7 +3689,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -3700,7 +3701,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!95 &95729293922445508
 Animator:
   serializedVersion: 3
@@ -3738,14 +3739,17 @@ MonoBehaviour:
   isJumping: 0
   jumpStart: 0
   particle: {fileID: 198890534866560170}
+  splash: {fileID: 19850840}
   chick: {fileID: 106224}
   audioIdle1: {fileID: 8300000, guid: 165be8d186673654d948550dd0283e5e, type: 3}
   audioIdle2: {fileID: 8300000, guid: c2e36b46d6f68f74095f71bec57078fd, type: 3}
   audioHop: {fileID: 8300000, guid: 9950c04412cb9eb48810ecbb7f3a752d, type: 3}
   audioHit: {fileID: 8300000, guid: 236a5cdc66675394ab0ed0b1991aa86e, type: 3}
   audioSplash: {fileID: 8300000, guid: 5b8b8818b0d1c734bbcc47b9aba6f6df, type: 3}
-  splash: {fileID: 19850840}
   parentedToObject: 0
+  enableAngleCheckOnMove: 1
+  angleCheck: 1
+  angleCheckDist: 0.5
 --- !u!114 &114860212678733042
 MonoBehaviour:
   m_ObjectHideFlags: 1

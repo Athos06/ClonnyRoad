@@ -23,8 +23,12 @@ public class Manager : MonoBehaviour
     private int currentDistance = 0;
     private bool canPlay = false;
 
-    private static Manager s_Instance;
 
+    private int highScore = 0;
+
+    public Remover remover;
+
+    private static Manager s_Instance;
     public static Manager instance
     {
         get
@@ -49,6 +53,9 @@ public class Manager : MonoBehaviour
 
         coin.text = "0";
         distance.text = "0";
+
+        LoadHighScore();
+
     }
 
     
@@ -74,6 +81,7 @@ public class Manager : MonoBehaviour
 
         levelGenerator.RandomGenerator();
         levelGenerator.RemovedOldGround();
+        remover.moveForward();
     }
 
     public bool CanPlay()
@@ -93,7 +101,17 @@ public class Manager : MonoBehaviour
 
         score.text = "Score: " + currentDistance;
 
-        uiController.GameOver();
+        bool record = false;
+
+        if (currentDistance > highScore)
+        {
+            SaveHighScore();
+            record = true;
+        }
+
+        uiController.GameOver(record);
+
+
     }
 
 
@@ -108,5 +126,26 @@ public class Manager : MonoBehaviour
     public void Quit()
     {
 
+    }
+
+    private void LoadHighScore()
+    {
+        highScore = PlayerPrefs.GetInt(Saves.HighScore);
+    }
+
+    private void SaveHighScore()
+    {
+        highScore = currentDistance;
+        PlayerPrefs.SetInt(Saves.HighScore, highScore);
+    }
+
+    private void IsFirstTimePlayer()
+    {
+        if (!PlayerPrefs.HasKey(Saves.FirstTimePlayed))
+        {
+            PlayerPrefs.SetInt(Saves.FirstTimePlayed, 1);
+            PlayerPrefs.SetInt(Saves.MusicOn, 1);
+            PlayerPrefs.SetInt(Saves.HighScore, 0);
+        }
     }
 }
