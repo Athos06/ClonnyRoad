@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 5454260}
   - component: {fileID: 114646970236509824}
   - component: {fileID: 82139969549303886}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -175,8 +175,8 @@ ParticleSystem:
   lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
-  prewarm: 1
+  looping: 0
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -3732,7 +3732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDistance: 1
   moveTime: 0.2
-  colliderDistCheck: 1
+  colliderDistCheck: 0.75
   isIdle: 1
   isDead: 0
   isMoving: 0
@@ -3750,6 +3750,8 @@ MonoBehaviour:
   enableAngleCheckOnMove: 1
   angleCheck: 1
   angleCheckDist: 0.5
+  offSetRightRaycast: 0.15
+  offSetLeftRaycast: -0.15
 --- !u!114 &114860212678733042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3769,11 +3771,11 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1605571793450200}
   serializedVersion: 5
-  lengthInSec: 0.1
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
-  prewarm: 1
+  looping: 0
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1

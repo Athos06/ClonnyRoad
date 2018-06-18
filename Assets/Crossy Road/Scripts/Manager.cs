@@ -116,13 +116,12 @@ public class Manager : MonoBehaviour
     public void PlayAgain()
     {
         Scene scene = SceneManager.GetActiveScene();
-
         SceneManager.LoadScene(scene.name);
     }
 
     public void Quit()
     {
-
+        Application.Quit();
     }
 
     private void LoadHighScore()

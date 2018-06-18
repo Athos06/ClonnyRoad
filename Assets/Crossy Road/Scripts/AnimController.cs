@@ -25,11 +25,7 @@ public class AnimController : MonoBehaviour {
         }
         else
         {
-            if (playerController.isJumping)
-            {
-                animator.SetBool("jump", true);
-            }
-            else
+            if (!playerController.isJumping)
             {
                 animator.SetBool("jump", false);
                 animator.SetBool("jumpStart", false);

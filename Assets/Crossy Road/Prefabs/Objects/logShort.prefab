@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 259ca27d61bf31146aa4ac2a88917824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0
   moveDirection: 0
   parentOnTrigger: 1
   hitBoxOnTrigger: 0
