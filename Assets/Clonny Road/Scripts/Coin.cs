@@ -41,30 +41,8 @@ public class Coin : MonoBehaviour {
                 ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
             }
         }
-        Debug.DrawRay(transform.position, Vector3.up*10, Color.red, 500);
+        Debug.DrawRay(transform.position, Vector3.up*10, Color.red, 5);
     }
-    ////since we use the Pooling system OnEnable is used instead of Start for initialization
-    //private void OnEnable()
-    //{
-    //    //when we create the coin we check it wasnt created inside a tree
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(this.transform.position, Vector3.up, out hit, 10.0f))
-    //    {
-    //        Debug.Log("enter in raycast");
-    //        if (hit.collider.tag == "Collider")
-    //        {
-    //            Debug.Log("tree detected in place deleting");
-    //            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
-    //        }
-
-    //        if (hit.collider.tag == "Coin")
-    //        {
-    //            Debug.Log("coin detected in place deleting");
-    //            ObjectPoolManager.Instance.ReturnObjectToPool(gameObject);
-    //        }
-    //    }
-    //    Debug.DrawRay(this.transform.position, Vector3.up, Color.red, 5);
-    //}
 
 
 
@@ -90,9 +68,5 @@ public class Coin : MonoBehaviour {
 
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("coin " + gameObject.name + "was destroyed and shouldnt");
-    }
 
 }

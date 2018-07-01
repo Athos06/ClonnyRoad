@@ -71,6 +71,9 @@ public class PlayerController : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Called everyframe to get the input from the player
+    /// </summary>
     void UpdateMovement()
     {
         if (isIdle)
@@ -83,23 +86,30 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
+    /// <summary>
+    /// We apply the rotation and try to apply the movement if its possible
+    /// </summary>
+    /// <param name="rot"></param>
     public void SetRotationAndMovement(Quaternion rot)
     {
+        //we apply rotation
         chick.transform.rotation = rot;
 
         if (CheckIfCanMove())
         {
+            //if we can move we start the movement
             SetMove();
         }
         else
         {
+            //otherwise we are idle
             isIdle = true;
         }
 
         int a = Random.Range(0, 12);
         if (a < 4) PlayAudioClip(audioIdle1);
     }
-
 
     bool CheckIfCanMove()
     {
@@ -137,6 +147,10 @@ public class PlayerController : MonoBehaviour {
             
     }
 
+
+    /// <summary>
+    /// Sets the flags to start the movement
+    /// </summary>
     void SetMove()
     {
         isIdle = false;
@@ -176,7 +190,6 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-
     void Moving(Vector3 movementVec)
     {
         isIdle = false;
@@ -187,7 +200,6 @@ public class PlayerController : MonoBehaviour {
 
         movementVector = movementVec;
     }
-
     
     /// <summary>
     /// Will be called by the AnimController when the startJumping animation finishes and call the event

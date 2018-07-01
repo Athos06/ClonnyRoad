@@ -38,7 +38,7 @@ public class LevelGenerator : MonoBehaviour {
     {
         foreach (ObjectsToPool obj in objectsToPool)
         {
-            ObjectPoolManager.Instance.CreatePool(obj.gameObj, obj.initialAmount, 200, false);
+            ObjectPoolManager.Instance.CreatePool(obj.gameObj, obj.initialAmount, 1000, false);
         }
 
         foreach (GameObject go in startGroundList)

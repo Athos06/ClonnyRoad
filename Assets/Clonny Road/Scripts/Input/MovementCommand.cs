@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MovementCommand : Command {
 
+
+    /// <summary>
+    /// The direction in which we are going to move
+    /// </summary>
     private Vector3 movementVector;
     public Vector3 MovementeVector
     {
@@ -17,6 +21,9 @@ public class MovementCommand : Command {
         }
     }
 
+    /// <summary>
+    /// the rotation in which we are going to look
+    /// </summary>
     private Quaternion rotation;
     public Quaternion Rotation
     {
@@ -30,9 +37,13 @@ public class MovementCommand : Command {
         }
     }
 
+    /// <summary>
+    /// Execute the command 
+    /// </summary>
+    /// <param name="character">The character this command controls</param>
     public override void Execute(PlayerController character)
     {
-        character.SetRotationAndMovement(rotation);
         character.MovementDirection = movementVector;
+        character.SetRotationAndMovement(rotation);
     }
 }

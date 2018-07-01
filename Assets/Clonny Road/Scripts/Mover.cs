@@ -25,11 +25,10 @@ public class Mover : MonoBehaviour
 
             if (parentOnTrigger)
             {
-            
-                other.transform.parent = this.transform;
-
-                if (!player.isDead)
+                if (!player.isDead) { 
+                    other.transform.parent = this.transform;
                     player.parentedToObject = true;
+                }
             }
 
             if (hitBoxOnTrigger)
