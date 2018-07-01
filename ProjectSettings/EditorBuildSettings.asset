@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Bootstrap.unity
+    path: Assets/Clonny Road/Scenes/Bootstrap.unity
     guid: ca8f107672118394c901efcbc4a1aa14
   - enabled: 1
-    path: Assets/Scenes/GameLevel.unity
+    path: Assets/Clonny Road/Scenes/GameLevel.unity
     guid: 58afb731a2b781e4ca49ed4f76fdd675

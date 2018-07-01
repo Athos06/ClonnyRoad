@@ -8,6 +8,8 @@ TagManager:
   - collider
   - train
   - DeathTrigger
+  - Coin
+  - Ground
   layers:
   - Default
   - TransparentFX
