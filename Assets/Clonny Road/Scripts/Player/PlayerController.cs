@@ -13,11 +13,18 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float colliderDistCheck = 1;
 
+   
     [Header("Player State flags")]
+    /// <summary>
+    /// When the character is not moving isIdle is true
+    /// </summary>
     public bool isIdle = true;
     public bool isDead = false;
-    public bool isMoving = false;
+    //public bool isMoving = false;
     public bool isJumping = false;
+        /// <summary>
+    /// Used to indicate when the StartJump animation starts, the little animation it does as preparation before the actual movement happens
+    /// </summary>
     public bool jumpStart = false;
     public bool parentedToObject = false;
 
@@ -55,6 +62,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 movementVector;
 
     public PlayerInput playerInput;
+    public PlayerAnimatorController playerAnimator;
 
     private void Start()
     {
@@ -63,14 +71,29 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
+
+        if (Input.GetKey(KeyCode.A)) { Time.timeScale = 1; }
+
         if (!Manager.Instance.CanPlay()) return;
         if (isDead) return;
 
-        UpdateMovement();
-        CanMove();
+        if (isIdle) { 
+            UpdateMovement();
+            SetMove();
+        }
 
+        UpdateAnimator();
     }
 
+
+    /// <summary>
+    /// Calls the PlayerAnimatorController to play the proper animation
+    /// </summary>
+    void UpdateAnimator()
+    {
+        playerAnimator.UpdateAnimator();
+    }
+ 
     /// <summary>
     /// Called everyframe to get the input from the player
     /// </summary>
@@ -96,10 +119,14 @@ public class PlayerController : MonoBehaviour {
         //we apply rotation
         chick.transform.rotation = rot;
 
-        if (CheckIfCanMove())
+        if (CheckForObstacle())
         {
-            //if we can move we start the movement
-            SetMove();
+            //if we can move we sets the flags to start the movement
+            isIdle = false;
+            //isMoving = true;
+            Debug.LogWarning("we start jumpStart to true in SetRotationAndMovement");
+            jumpStart = true;
+            StartCoroutine(StartMoveDelay());
         }
         else
         {
@@ -111,7 +138,14 @@ public class PlayerController : MonoBehaviour {
         if (a < 4) PlayAudioClip(audioIdle1);
     }
 
-    bool CheckIfCanMove()
+
+    IEnumerator StartMoveDelay()
+    {
+        yield return new WaitForSeconds(0.15f);
+        StartMovementJump();
+    }
+
+    bool CheckForObstacle()
     {
         RaycastHit hit;
         RaycastHit hitLeft;
@@ -147,22 +181,14 @@ public class PlayerController : MonoBehaviour {
             
     }
 
-
     /// <summary>
-    /// Sets the flags to start the movement
+    /// Called to check the movement direction and set the movement parameter accordingly
     /// </summary>
     void SetMove()
     {
-        isIdle = false;
-        isMoving = true;
-        jumpStart = true;
-
-    }
-
-    void CanMove()
-    {
-        if (isMoving)
+        if (jumpStart)
         {
+            Debug.LogWarning("we get to setmove and jumpstart is true");
             if (movementDirection == Vector3.forward)
             {
                 if (transform.position.z + moveDistance > mostAdvancedPosition)
@@ -171,46 +197,58 @@ public class PlayerController : MonoBehaviour {
                     SetMoveForwardState();
                 }
 
-                Moving(new Vector3(transform.position.x, transform.position.y, transform.position.z + moveDistance));
+                ApplyingMovementVector(new Vector3(transform.position.x, transform.position.y, transform.position.z + moveDistance));
 
             }
             else if (movementDirection == Vector3.back)
             {
-                Moving(new Vector3(transform.position.x, transform.position.y, transform.position.z - moveDistance));
+                ApplyingMovementVector(new Vector3(transform.position.x, transform.position.y, transform.position.z - moveDistance));
             }
             else if (movementDirection == Vector3.left)
             {
-                Moving(new Vector3(transform.position.x - moveDistance, transform.position.y, transform.position.z));
+                ApplyingMovementVector(new Vector3(transform.position.x - moveDistance, transform.position.y, transform.position.z));
             }
             else if (movementDirection == Vector3.right)
             {
-                Moving(new Vector3(transform.position.x + moveDistance, transform.position.y, transform.position.z));
+                ApplyingMovementVector(new Vector3(transform.position.x + moveDistance, transform.position.y, transform.position.z));
             }
         }
 
     }
 
-    void Moving(Vector3 movementVec)
+    /// <summary>
+    /// We set the character to move (we set the values of the movement vector and the proper flags)
+    /// </summary>
+    /// <param name="movementVec"> the movement vector </param>
+    void ApplyingMovementVector(Vector3 movementVec)
     {
         isIdle = false;
-        isMoving = false;
-        isJumping = true;
+        //isJumping = true;
+        //jumpStart = false;
+        //isMoving = false;
+
 
         PlayAudioClip(audioHop);
 
         movementVector = movementVec;
     }
     
+
+
     /// <summary>
     /// Will be called by the AnimController when the startJumping animation finishes and call the event
     /// </summary>
-    public void StartMovement()
+    public void StartMovementJump()
     {
+        Debug.LogWarning("we called StartMovementJump");
+        jumpStart = false;
+        isJumping = true;
         StartCoroutine(Move(movementVector, moveTime));
     }
 
     IEnumerator Move(Vector3 pos, float moveTime)
     {
+        Debug.Log("move its also called");
         Vector3 currentPos = transform.position;
 
         float t = 0;
@@ -227,8 +265,8 @@ public class PlayerController : MonoBehaviour {
 
     void MoveComplete()
     {
+        Debug.Log("Move complete");
         isJumping = false;
-        jumpStart = false;
         isIdle = true;
 
         PlayRandomSound();
@@ -264,6 +302,7 @@ public class PlayerController : MonoBehaviour {
 
     public void GotSoaked()
     {
+        Debug.Log("Yes, chicken soaked");
         isDead = true;
         splash.Play();
         ParticleSystem.EmissionModule em = splash.emission;

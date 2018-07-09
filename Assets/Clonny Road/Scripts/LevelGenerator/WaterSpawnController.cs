@@ -21,21 +21,22 @@ public class WaterSpawnController : MonoBehaviour
         GameObject item = items[itemId];
 
         if (firstTime) { 
+            //true to the right, false to the left
             waterDirection = Random.Range(0, 2) > 0 ?  true : false;
             firstTime = false;
         }
-                
+
         if (waterDirection)
         {
             goLeft = false;
             goRight = true;
-            waterDirection = false;
+            //waterDirection = false;
         }
         else
         {
             goLeft = true;
             goRight = false;
-            waterDirection = true;
+            //waterDirection = true;
         }
 
         for (int i = 0; i < spawnersLeft.Count; i++)

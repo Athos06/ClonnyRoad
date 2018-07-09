@@ -89,6 +89,9 @@ public class LevelGenerator : MonoBehaviour {
 
             go.transform.parent = this.transform;
 
+            //they are disabled by default so when they are instantiated the collider dont give a positive with the player
+            go.SetActive(true);
+
         }
         
     }
