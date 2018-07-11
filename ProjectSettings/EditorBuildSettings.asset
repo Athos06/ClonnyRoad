@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Clonny Road/Scenes/Bootstrap.unity
     guid: ca8f107672118394c901efcbc4a1aa14
   - enabled: 1
-    path: Assets/Clonny Road/Scenes/WaterOnly.unity
-    guid: f6bc68fe6abc6244cbe6e95082d4fbf3
-  - enabled: 1
     path: Assets/Clonny Road/Scenes/GameLevel.unity
     guid: 58afb731a2b781e4ca49ed4f76fdd675
   m_configObjects: {}

@@ -44,6 +44,7 @@ public class MovementCommand : Command {
     public override void Execute(PlayerController character)
     {
         character.MovementDirection = movementVector;
-        character.SetRotationAndMovement(rotation);
+        character.SetRotation(rotation);
+        character.SetMove();
     }
 }

@@ -12,28 +12,6 @@ public class PlayerAnimatorController : MonoBehaviour {
         animator = this.GetComponent<Animator>();
     }
 
-    //private void Update()
-    //{
-    //    if (playerController.isDead)
-    //    {
-    //        animator.SetBool("dead", true);
-    //    }
-
-    //    if (playerController.jumpStart)
-    //    {
-    //        animator.SetBool("jumpStart", true);
-    //    }
-    //    else
-    //    {
-    //        if (!playerController.isJumping)
-    //        {
-    //            animator.SetBool("jump", false);
-    //            animator.SetBool("jumpStart", false);
-    //        }
-    //    }
-
-    //}
-
     public void  UpdateAnimator()
     {
         if (playerController.isDead)
@@ -59,23 +37,6 @@ public class PlayerAnimatorController : MonoBehaviour {
                 animator.SetBool("jumpStart", false);
             }
         }
-        
-        //else
-        //{
 
-
-        //    //if (!playerController.isJumping)
-        //    //{
-        //    //    animator.SetBool("jump", false);
-        //    //    animator.SetBool("jumpStart", false);
-        //    //}
-        //}
-
-    }
-
-    public void StartJumpingEvent()
-    {
-        Debug.LogWarning("we register the jumping event, we will call StartMovementJump");
-        //playerController.StartMovementJump();
     }
 }

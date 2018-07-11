@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour {
     [Header("Movement properties")]
     [SerializeField]
     private float moveDistance = 1;
+    /// <summary>
+    /// Time it will take the character to finish its movement 
+    /// </summary>
     [SerializeField]
     private float moveTime = 0.4f;
     [SerializeField]
@@ -71,15 +74,15 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-
-        if (Input.GetKey(KeyCode.A)) { Time.timeScale = 1; }
-
         if (!Manager.Instance.CanPlay()) return;
-        if (isDead) return;
+        if (isDead)
+        {
+            UpdateAnimator();
+            return;
+        }
 
         if (isIdle) { 
             UpdateMovement();
-            SetMove();
         }
 
         UpdateAnimator();
@@ -101,8 +104,13 @@ public class PlayerController : MonoBehaviour {
     {
         if (isIdle)
         {
+            //MovementCommand com = new MovementCommand();
+            //com.Rotation = Quaternion.Euler(270, -90, 0);
+            //com.MovementeVector = Vector3.left;
+            //com.Execute(this);
+
             //We get the player input for this frame
-            foreach(Command inputCommand in playerInput.GetInput())
+            foreach (Command inputCommand in playerInput.GetInput())
             {
                 inputCommand.Execute(this);
             }
@@ -114,35 +122,22 @@ public class PlayerController : MonoBehaviour {
     /// We apply the rotation and try to apply the movement if its possible
     /// </summary>
     /// <param name="rot"></param>
-    public void SetRotationAndMovement(Quaternion rot)
+    public void SetRotation(Quaternion rot)
     {
         //we apply rotation
         chick.transform.rotation = rot;
-
-        if (CheckForObstacle())
-        {
-            //if we can move we sets the flags to start the movement
-            isIdle = false;
-            //isMoving = true;
-            Debug.LogWarning("we start jumpStart to true in SetRotationAndMovement");
-            jumpStart = true;
-            StartCoroutine(StartMoveDelay());
-        }
-        else
-        {
-            //otherwise we are idle
-            isIdle = true;
-        }
 
         int a = Random.Range(0, 12);
         if (a < 4) PlayAudioClip(audioIdle1);
     }
 
 
-    IEnumerator StartMoveDelay()
+    IEnumerator StartJumpMove()
     {
+        //we wait for a little (the prepare jump animation will execute meanwhile)
         yield return new WaitForSeconds(0.15f);
-        StartMovementJump();
+        //And then we start the displacement
+        StartDisplacement();
     }
 
     bool CheckForObstacle()
@@ -182,13 +177,16 @@ public class PlayerController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Called to check the movement direction and set the movement parameter accordingly
+    /// Called to set the movemnt, checking direction and set the movement parameter accordingly
     /// </summary>
-    void SetMove()
+    public void SetMove()
     {
-        if (jumpStart)
+        if (CheckForObstacle())
         {
-            Debug.LogWarning("we get to setmove and jumpstart is true");
+            //if we can move we sets the flags to start the movement
+            isIdle = false;
+            jumpStart = true;
+
             if (movementDirection == Vector3.forward)
             {
                 if (transform.position.z + moveDistance > mostAdvancedPosition)
@@ -212,6 +210,15 @@ public class PlayerController : MonoBehaviour {
             {
                 ApplyingMovementVector(new Vector3(transform.position.x + moveDistance, transform.position.y, transform.position.z));
             }
+
+            //we start the jumping
+            StartCoroutine(StartJumpMove());
+
+        }
+        else
+        {
+            //otherwise we are idle
+            isIdle = true;
         }
 
     }
@@ -223,24 +230,17 @@ public class PlayerController : MonoBehaviour {
     void ApplyingMovementVector(Vector3 movementVec)
     {
         isIdle = false;
-        //isJumping = true;
-        //jumpStart = false;
-        //isMoving = false;
-
 
         PlayAudioClip(audioHop);
 
         movementVector = movementVec;
     }
-    
-
 
     /// <summary>
     /// Will be called by the AnimController when the startJumping animation finishes and call the event
     /// </summary>
-    public void StartMovementJump()
+    public void StartDisplacement()
     {
-        Debug.LogWarning("we called StartMovementJump");
         jumpStart = false;
         isJumping = true;
         StartCoroutine(Move(movementVector, moveTime));
@@ -248,24 +248,21 @@ public class PlayerController : MonoBehaviour {
 
     IEnumerator Move(Vector3 pos, float moveTime)
     {
-        Debug.Log("move its also called");
         Vector3 currentPos = transform.position;
 
         float t = 0;
-
         while(t < 1)
         {
             t += Time.deltaTime / moveTime;
             transform.position = Vector3.Lerp(currentPos, pos, t);
             yield return null;
         }
-
+        
         MoveComplete();
     }
 
     void MoveComplete()
     {
-        Debug.Log("Move complete");
         isJumping = false;
         isIdle = true;
 
