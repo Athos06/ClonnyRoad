@@ -64,8 +64,19 @@ public class PlayerController : MonoBehaviour {
 
     private Vector3 movementVector;
 
-    public PlayerInput playerInput;
+    private PlayerInput playerInput;
+
     public PlayerAnimatorController playerAnimator;
+
+    private void Awake()
+    {
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
+        playerInput = new PlayerInputMobile();
+        //playerInput = new PlayerInputPC();
+#elif UNITY_IOS || UNITY_ANDROID
+            playerInput = new PlayerInputMobile();
+#endif
+    }
 
     private void Start()
     {
@@ -315,6 +326,9 @@ public class PlayerController : MonoBehaviour {
 
     public void GotOutOfBounds()
     {
+        if (isDead)
+            return;
+
         isDead = true;
 
         PlayAudioClip(audioHit);

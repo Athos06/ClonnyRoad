@@ -7,11 +7,22 @@ using System;
 
 public class Manager : Singleton<Manager>
 {
-    public UIController uiController;
+    private UIController uiController;
+    public UIController uiControllerPortraitMode;
+    public UIController uiControllerLandscapeMode;
+
     [Header("GUI texts")]    
-    public Text coin = null;
-    public Text distance = null;
-    public Text score = null;
+    private Text coin = null;
+    private Text distance = null;
+    private Text score = null;
+    [Header("GUI Portrait mode texts")]
+    public Text coinPortrait = null;
+    public Text distancePortrait = null;
+    public Text scorePortrait = null;
+    [Header("GUI Landscape mode texts")]
+    public Text coinLandscape = null;
+    public Text distanceLandscape = null;
+    public Text scoreLandscape = null;
 
     [Header("Manager set up")]
     [SerializeField]
@@ -30,6 +41,23 @@ public class Manager : Singleton<Manager>
 
     private void Start()
     {
+        if(Camera.main.aspect < 1.0f)
+        {
+            uiController = uiControllerPortraitMode;
+
+            coin = coinPortrait;
+            distance = distancePortrait;
+            score = scorePortrait;
+        }
+        else
+        {
+            uiController = uiControllerLandscapeMode;
+
+            coin = coinLandscape;
+            distance = distanceLandscape;
+            score = scoreLandscape;
+        }
+
         for (int i = 0; i < levelCount; i++ )
         {
             levelGenerator.RandomGenerator();

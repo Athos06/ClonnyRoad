@@ -7,18 +7,43 @@ public class CameraFollow : MonoBehaviour
     public bool autoMove = false;
     public GameObject player = null;
 
-    public Vector3 offset = new Vector3(3, 6, -3);
+    [SerializeField]
+    private Vector3 offset = new Vector3();
+
+    public Vector3 smallScreenOffset = new Vector3(3, 6, -2);
+    public Vector3 bigScreenOffset = new Vector3(3, 6, -3);
+
     public float speed = 0.25f;
 
-    public float followSpeed = 1.0f;
+    private float followSpeed = 1.0f;
+    public float followSpeedPortrait = 1.0f;
+    public float followSpeedLandscape = 1.0f;
 
-    public float leftMarginPosition = -18.5f;
-    public float RightMarginPosition = 22.5f;
+    private float leftMarginPosition = -18.5f;
+    private float RightMarginPosition = 22.5f;
+    public float leftMarginPositionPortrait = -22.5f;
+    public float RightMarginPositionPortrait = 23.5f;
+    public float leftMarginPositionLandscape = -18.5f;
+    public float RightMarginPositionLandscape = 22.5f;
+
     Vector3 depth = Vector3.zero;
     Vector3 pos = Vector3.zero;
 
     private void Start()
     {
+        //in portrait or landscape mode we have different offsets
+        if (Camera.main.aspect < 1.0f) { 
+            offset = smallScreenOffset;
+            followSpeed = followSpeedPortrait;
+            leftMarginPosition = leftMarginPositionPortrait;
+            RightMarginPosition = RightMarginPositionPortrait;
+        }
+        else { 
+            offset = bigScreenOffset;
+            followSpeed = followSpeedLandscape;
+            leftMarginPosition = leftMarginPositionLandscape;
+            RightMarginPosition = RightMarginPositionLandscape;
+        }
         pos = player.transform.position + offset;
         gameObject.transform.position = new Vector3(pos.x, offset.y, pos.z);
     }

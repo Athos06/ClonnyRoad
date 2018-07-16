@@ -10,15 +10,15 @@ public class Water : MonoBehaviour
     {
         if (hitWater) return;
 
+
         if(other.tag == "Player")
         {
-           
+
             PlayerController playerController = other.GetComponent<PlayerController>();
 
             if( !playerController.parentedToObject && !playerController.isJumping)
             {
                 hitWater = true;
-
                 playerController.GotSoaked();
             }
         }

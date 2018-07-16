@@ -48,7 +48,6 @@ GameObject:
   - component: {fileID: 5454260}
   - component: {fileID: 114646970236509824}
   - component: {fileID: 82139969549303886}
-  - component: {fileID: 114214125821428786}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -4912,17 +4911,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114214125821428786
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 114832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f1c4474fa93f9448807ba88296422a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114646970236509824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4952,7 +4940,6 @@ MonoBehaviour:
   audioSplash: {fileID: 8300000, guid: 5b8b8818b0d1c734bbcc47b9aba6f6df, type: 3}
   offSetRightRaycast: 0.15
   offSetLeftRaycast: -0.15
-  playerInput: {fileID: 114214125821428786}
   playerAnimator: {fileID: 114860212678733042}
 --- !u!114 &114860212678733042
 MonoBehaviour:
