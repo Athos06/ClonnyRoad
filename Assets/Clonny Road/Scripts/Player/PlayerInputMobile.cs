@@ -74,16 +74,22 @@ public class PlayerInputMobile : PlayerInput
             }
         }
 #endif
+        
         if (Input.touchCount > 0)
         {
             Touch touch = Input.touches[0];
 
             if (touch.phase == TouchPhase.Began)
             {
+                initialized = true;
                 touchStart = touch.position;
             }
+            
             else if (touch.phase == TouchPhase.Ended)
             {
+                if (!initialized)
+                    return inputCommands;
+
                 Vector2 touchEnd = touch.position;
 
                 float x = touchEnd.x - touchStart.x;
